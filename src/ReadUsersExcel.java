@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class ReadUsersExcel {
-    public User[] readExcel(InputStream in){
+    public User[] getAllUsers(InputStream in){
         User[] users = null;
         try {
             XSSFWorkbook xw = new XSSFWorkbook(in);
