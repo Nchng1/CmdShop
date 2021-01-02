@@ -40,8 +40,8 @@ public class Test {
                     System.out.println("请输入商品ID：");
                     String pId=scanner.next();
                     proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
-                    ReadProductsExcel readProductsExcel1 = new ReadProductsExcel();
-                    Product product = readProductsExcel1.getProById(pId, proIn);
+//                    ReadProductsExcel readProductsExcel1 = new ReadProductsExcel();
+                    Product product = readProductsExcel.getProById(pId, proIn);
                     if ( product!= null) {
                         /*
                         把商品加入购物车
@@ -57,6 +57,41 @@ public class Test {
                     2、继续购物
                        显示所有的商品
                     */
+                    System.out.println("查看已购商品请输入1\n继续购物请输入2");
+                    int number = scanner.nextInt();
+                    if(number == 1){
+                        for(Product p : proSelected){
+                                if(p == null){
+                                    break;
+                                }
+                            System.out.print(p.getProId());
+                            System.out.print("\t" + p.getProName());
+                            System.out.print("\t\t" + p.getPrice());
+                            System.out.println("\t\t" + p.getDecription());
+
+                        }
+                    }else if(number == 2){
+                        for (Product p : products) {
+                            System.out.print("" + p.getProId());
+                            System.out.print("\t\t" + p.getProName());
+                            System.out.print("\t\t" + p.getPrice());
+                            System.out.println("\t\t" + p.getDecription());
+                        }
+                        System.out.println("请输入商品ID：");
+                        pId=scanner.next();
+                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
+//                        ReadProductsExcel readProductsExcel2 = new ReadProductsExcel();
+                        Product product1 = readProductsExcel.getProById(pId, proIn);
+                        if ( product1!= null) {
+                        /*
+                        把商品加入购物车
+                        */
+//                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
+                            proSelected[count++] = product1;
+                            System.out.println("商品已加入购物车");
+                        }
+                    }
+
                     flag = false;
                     break;
                 }
