@@ -69,7 +69,7 @@ public class Test {
                         System.out.println("查看已购商品请输入1\n继续购物请输入2\n结账请输入3\n退出商城请输入4");
                         int number = scanner.nextInt();
                         if (number == 1 || number == 2) {
-                            //调用Mothod类的mothod方法
+                            //调用choose()方法
                             choose(number);
 //                        for (Product p : proSelected) {
 //                            if (p == null) {
