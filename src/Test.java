@@ -1,131 +1,107 @@
 import java.io.InputStream;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Test {
 
     static int count;
-    static Product proSelected[] = new Product[5];//è´­ç‰©è½¦
+    static Product proSelected[] = new Product[5];//¹ºÎï³µ
     static Product product;
     static Product[] products;
     static String pId;
     static InputStream proIn;
     static ReadProductsExcel readProductsExcel;
     static Scanner scanner = new Scanner(System.in);
+    static HashMap<Product, Integer> amount = new HashMap<Product, Integer>();;
 
     public static void main(String[] args) throws ClassNotFoundException {
         boolean flag = true;
         while (flag) {
-            System.out.println("è¯·è¾“å…¥ç”¨æˆ·åï¼š");
+            System.out.println("ÇëÊäÈëÓÃ»§Ãû£º");
             String testName = scanner.next().trim();
-            System.out.println("è¯·è¾“å…¥å¯†ç ï¼š");
+            System.out.println("ÇëÊäÈëÃÜÂë£º");
             String testPassword = scanner.next().trim();
 /*
-        è¯»å–æ–‡ä»¶
+        ¶ÁÈ¡ÎÄ¼ş
         */
 //        File file = new File("C:\\Users\\zed\\IdeaProjects\\CmdShop\\src\\users.xlsx");
-            InputStream in = Class.forName("Test").getResourceAsStream("/users.xlsx"); // /è¡¨ç¤ºçš„æ˜¯classpath
+            InputStream in = Class.forName("Test").getResourceAsStream("/users.xlsx"); // /±íÊ¾µÄÊÇclasspath
             ReadUsersExcel readUsersExcel = new ReadUsersExcel();
             User[] users = readUsersExcel.getAllUsers(in);
 
-            proIn = Class.forName("Test").getResourceAsStream("/products.xlsx"); // /è¡¨ç¤ºçš„æ˜¯classpath
+            proIn = Class.forName("Test").getResourceAsStream("/products.xlsx"); // /±íÊ¾µÄÊÇclasspath
             readProductsExcel = new ReadProductsExcel();
             products = readProductsExcel.getAllProducts(proIn);
 
             for (User user : users) {
                 if (testName.equals(user.getName()) && testPassword.equals(user.getPassword())) {
-                    System.out.println("ç™»å½•æˆåŠŸ");
+                    System.out.println("µÇÂ¼³É¹¦");
                     flag = false;
                     /*
-                    æ˜¾ç¤ºå•†å“
+                    ÏÔÊ¾ÉÌÆ·
                     */
-                    for (Product p : products) {
-                        System.out.print("" + p.getProId());
-                        System.out.print("\t\t" + p.getProName());
-                        System.out.print("\t\t" + p.getPrice());
-                        System.out.println("\t\t" + p.getDecription());
-                    }
-                    System.out.println("è´­ä¹°è¯·è¾“å…¥å•†å“IDï¼š");
-                    pId = scanner.next();
-                    proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
-//                    ReadProductsExcel readProductsExcel1 = new ReadProductsExcel();
-                    product = readProductsExcel.getProById(pId, proIn);
-                    if (product != null) {
-                        /*
-                        æŠŠå•†å“åŠ å…¥è´­ç‰©è½¦
-                        */
-//                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
-                        proSelected[count++] = product;
-                        System.out.println("å•†å“å·²åŠ å…¥è´­ç‰©è½¦");
-                        System.out.println("");
-                    }
                     /*
-                    1ã€æŸ¥çœ‹è´­ç‰©è½¦
-                     ï¼ˆ1ï¼‰è´­ç‰©è½¦æ˜¯ç”¨æ•°ç»„æ¨¡æ‹Ÿçš„
-                     ï¼ˆ2ï¼‰å¯¹æ•°ç»„éå†
-                    2ã€ç»§ç»­è´­ç‰©
-                       æ˜¾ç¤ºæ‰€æœ‰çš„å•†å“
+                    1¡¢²é¿´¹ºÎï³µ
+                     £¨1£©¹ºÎï³µÊÇÓÃÊı×éÄ£ÄâµÄ
+                     £¨2£©¶ÔÊı×é±éÀú
+                    2¡¢¼ÌĞø¹ºÎï
+                       ÏÔÊ¾ËùÓĞµÄÉÌÆ·
                     */
                     while (true) {
-                        System.out.println("æŸ¥çœ‹å·²è´­å•†å“è¯·è¾“å…¥1\nç»§ç»­è´­ç‰©è¯·è¾“å…¥2\nç»“è´¦è¯·è¾“å…¥3\né€€å‡ºå•†åŸè¯·è¾“å…¥4");
+                        System.out.println("²é¿´ÒÑ¹ºÉÌÆ·ÇëÊäÈë1\n¹ºÎïÇëÊäÈë2\n½áÕËÇëÊäÈë3\nÍË³öÉÌ³ÇÇëÊäÈë4");
                         int number = scanner.nextInt();
                         if (number == 1 || number == 2) {
-                            //è°ƒç”¨Mothodç±»çš„mothodæ–¹æ³•
+                            //µ÷ÓÃMothodÀàµÄmothod·½·¨
                             choose(number);
-//                        for (Product p : proSelected) {
-//                            if (p == null) {
-//                                break;
-//                            }
-//                            System.out.print(p.getProId());
-//                            System.out.print("\t" + p.getProName());
-//                            System.out.print("\t\t" + p.getPrice());
-//                            System.out.println("\t\t" + p.getDecription());
-//                        }
-//                    } else if (number == 2) {
-//                        for (Product p : products) {
-//                            System.out.print("" + p.getProId());
-//                            System.out.print("\t\t" + p.getProName());
-//                            System.out.print("\t\t" + p.getPrice());
-//                            System.out.println("\t\t" + p.getDecription());
-//                        }
-//                        System.out.println("è¯·è¾“å…¥å•†å“IDï¼š");
-//                        pId = scanner.next();
-//                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
-////                        ReadProductsExcel readProductsExcel2 = new ReadProductsExcel();
-//                        Product product1 = readProductsExcel.getProById(pId, proIn);
-//                        if (product1 != null) {
-//                        /*
-//                        æŠŠå•†å“åŠ å…¥è´­ç‰©è½¦
-//                        */
-////                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
-//                            proSelected[count++] = product1;
-//                            System.out.println("å•†å“å·²åŠ å…¥è´­ç‰©è½¦");
-//                        }
                         } else if (number == 3) {
-                            System.out.println("ç»“è´¦");
-                            break;
+                            /*
+                            * 1.²úÉú¶©µ¥£¨±ØĞëÓĞ¶©µ¥Àà£©
+                            * 2.ÓÃpoi´´½¨Order.xlsxÎÄ¼ş
+                            * 3.°Ñ¹ºÎï³µµÄÉÌÆ·Ğ´ÈëOrder.xlsxÎÄ¼ş
+                            * */
+                            Order order = new Order();
+                            order.setUser(user);//¶©µ¥¹ØÁªÓÃ»§
+                            Product carts[] = new Product[count];
+                            for(int i = 0 ; i < carts.length; i++){
+                                if(proSelected[i] != null) {
+                                    carts[i] = proSelected[i];
+                                }
+                            }
+                            order.setProduct(carts);//¶©µ¥¹ØÁªÉÌÆ·
+
+                            order.setAmount(amount);
+
+                            //order.setTotalPay();
+                            long currentTime = System.currentTimeMillis();
+                            Date date = new Date(currentTime);
+                            order.setOrderDate(date);
+                            //ÏÂ¶©µ¥
+                            CreateOrder.createOrder(order);
+
                         } else if (number == 4) {
-                            System.out.println("å•†åŸå·²é€€å‡ºï¼");
+                            System.out.println("ÉÌ³ÇÒÑÍË³ö£¡");
                             break;
                         }
                     }
                 }
             }
             if (flag == true)
-                System.out.println("ç™»å½•å¤±è´¥");
+                System.out.println("µÇÂ¼Ê§°Ü");
         }
     }
 
-    //æ–¹æ³•æŠ½å–
+    //·½·¨³éÈ¡
     public static void choose(int number) throws ClassNotFoundException {
         /*
-        1ã€æŸ¥çœ‹è´­ç‰©è½¦
-         ï¼ˆ1ï¼‰è´­ç‰©è½¦æ˜¯ç”¨æ•°ç»„æ¨¡æ‹Ÿçš„
-         ï¼ˆ2ï¼‰å¯¹æ•°ç»„éå†
-        2ã€ç»§ç»­è´­ç‰©
-           æ˜¾ç¤ºæ‰€æœ‰çš„å•†å“
+        1¡¢²é¿´¹ºÎï³µ
+         £¨1£©¹ºÎï³µÊÇÓÃÊı×éÄ£ÄâµÄ
+         £¨2£©¶ÔÊı×é±éÀú
+        2¡¢¼ÌĞø¹ºÎï
+           ÏÔÊ¾ËùÓĞµÄÉÌÆ·
         */
         if (number == 1) {
-            //æ˜¾ç¤ºå·²è´­å•†å“
+            //ÏÔÊ¾ÒÑ¹ºÉÌÆ·
             for (Product p : proSelected) {
                 if (p == null) {
                     break;
@@ -133,33 +109,36 @@ public class Test {
                 System.out.print(p.getProId());
                 System.out.print("\t" + p.getProName());
                 System.out.print("\t\t" + p.getPrice());
-                System.out.println("\t\t" + p.getDecription());
-
+                System.out.print("\t\t" + p.getDecription());
+                System.out.println("\t¹ºÂòÊıÁ¿X" + amount.get(p));
             }
         } else if (number == 2) {
-            //æ˜¾ç¤ºå•†å“
+            //ÏÔÊ¾ÉÌÆ·
             for (Product p : products) {
                 System.out.print("" + p.getProId());
                 System.out.print("\t\t" + p.getProName());
                 System.out.print("\t\t" + p.getPrice());
                 System.out.println("\t\t" + p.getDecription());
             }
-            System.out.println("è¯·è¾“å…¥å•†å“IDï¼š");
+            System.out.println("ÇëÊäÈëÉÌÆ·IDºÍÊıÁ¿:");
             pId = scanner.next();
+            int proAmount = scanner.nextInt();
             proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
 //                        ReadProductsExcel readProductsExcel2 = new ReadProductsExcel();
             product = readProductsExcel.getProById(pId, proIn);
             if (product != null) {
                         /*
-                        æŠŠå•†å“åŠ å…¥è´­ç‰©è½¦
+                        °ÑÉÌÆ·¼ÓÈë¹ºÎï³µ
                         */
 //                        proIn = Class.forName("Test").getResourceAsStream("/products.xlsx");
                 if (count < 5) {
-                    proSelected[count++] = product;
-                    System.out.println("å•†å“å·²åŠ å…¥è´­ç‰©è½¦");
+                    proSelected[count] = product;
+                    amount.put(proSelected[count],proAmount);
+                    count++;
+                    System.out.println("ÉÌÆ·ÒÑ¼ÓÈë¹ºÎï³µ");
                     System.out.println("");
                 } else {
-                    System.out.println("è´­ç‰©è½¦å·²æ»¡,æ— æ³•åŠ å…¥æ–°çš„å•†å“");
+                    System.out.println("¹ºÎï³µÒÑÂú,ÎŞ·¨¼ÓÈëĞÂµÄÉÌÆ·");
                 }
             }
         }
